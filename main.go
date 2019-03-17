@@ -25,6 +25,7 @@ func main() {
 		r.Use(middleware.BasicAuth)
 		r.Get("/", hero.Handler(routes.Automatas))
 		r.Get("/{id: uint}", hero.Handler(routes.AutomataByID))
+		r.Post("/", hero.Handler(routes.InsertAutomata))
 	})
 
 	app.Run(
