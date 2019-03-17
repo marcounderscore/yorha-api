@@ -17,7 +17,7 @@ func main() {
 
 	// Repository is created with the data from data source
 	repo := repositories.NewAutomataRepository(datasource.Automatas)
-	// Automata service will bind it to the automata app's dependencies.
+	// Automata service will bind it to the app's dependencies.
 	automataService := services.NewAutomataService(repo)
 	hero.Register(automataService)
 

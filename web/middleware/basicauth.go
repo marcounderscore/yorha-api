@@ -1,5 +1,3 @@
-// file: web/middleware/basicauth.go
-
 package middleware
 
 import "github.com/kataras/iris/middleware/basicauth"
