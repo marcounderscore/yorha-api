@@ -10,6 +10,7 @@ type AutomataService interface {
 	GetAll() []datamodels.Automata
 	GetByID(id uint) (datamodels.Automata, bool)
 	Create(name string, occupation string, race string, photo string) (datamodels.Automata, error)
+	Update(id uint, name string, occupation string, race string, photo string) (datamodels.Automata, bool, error)
 }
 
 // NewAutomataService returns the default service
@@ -32,8 +33,16 @@ func (s *automataService) GetByID(id uint) (datamodels.Automata, bool) {
 }
 
 func (s *automataService) Create(name string, occupation string, race string, photo string) (datamodels.Automata, error) {
-	// update the movie and return it.
 	return s.repo.Insert(datamodels.Automata{
+		Name:       name,
+		Occupation: occupation,
+		Race:       race,
+		Photo:      photo,
+	})
+}
+
+func (s *automataService) Update(id uint, name string, occupation string, race string, photo string) (datamodels.Automata, bool, error) {
+	return s.repo.Update(id, datamodels.Automata{
 		Name:       name,
 		Occupation: occupation,
 		Race:       race,
