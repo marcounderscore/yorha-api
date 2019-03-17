@@ -24,6 +24,7 @@ func main() {
 	app.PartyFunc("/automatas", func(r iris.Party) {
 		r.Use(middleware.BasicAuth)
 		r.Get("/", hero.Handler(routes.Automatas))
+		r.Get("/{id: uint}", hero.Handler(routes.AutomataByID))
 	})
 
 	app.Run(
