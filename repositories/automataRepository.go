@@ -10,6 +10,7 @@ import (
 type AutomataRepository interface {
 	SelectMany() (results []datamodels.Automata)
 	Select(id uint) (automata datamodels.Automata, found bool)
+	Insert(automata datamodels.Automata) (insertedRecord datamodels.Automata, err error)
 }
 
 // NewAutomataRepository returns a new memory-based repository,
@@ -22,14 +23,12 @@ type automataMemoryRepository struct {
 }
 
 func (r *automataMemoryRepository) SelectMany() (results []datamodels.Automata) {
-	//Gorm method to retrieve all data from this source
 	r.source.Find(&results)
 
 	return
 }
 
 func (r *automataMemoryRepository) Select(id uint) (automata datamodels.Automata, found bool) {
-	//Due unexpected result with "First" method the "Find" method with "for" loop is used instead
 	var automatas []datamodels.Automata
 	r.source.Find(&automatas)
 	for _, item := range automatas {
@@ -40,4 +39,16 @@ func (r *automataMemoryRepository) Select(id uint) (automata datamodels.Automata
 	}
 
 	return
+}
+
+func (r *automataMemoryRepository) Insert(automata datamodels.Automata) (datamodels.Automata, error) {
+	r.source.Create(&datamodels.Automata{
+		Name:       automata.Name,
+		Occupation: automata.Occupation,
+		Race:       automata.Race,
+		Photo:      automata.Photo,
+	})
+	r.source.Last(&automata)
+
+	return automata, nil
 }
