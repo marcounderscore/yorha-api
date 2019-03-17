@@ -7,6 +7,7 @@ import (
 // AutomataRepository handles the basic operations of Automata entity/model.
 type AutomataRepository interface {
 	SelectMany() (results []datamodels.Automata)
+	Select(id uint) (automata datamodels.Automata, found bool)
 }
 
 // NewAutomataRepository returns a new movie memory-based repository,
@@ -27,6 +28,17 @@ const (
 
 func (r *automataMemoryRepository) SelectMany() (results []datamodels.Automata) {
 	results = r.source
+
+	return
+}
+
+func (r *automataMemoryRepository) Select(id uint) (automata datamodels.Automata, found bool) {
+	for _, item := range r.source {
+		if item.ID == id {
+			automata = item
+			return automata, true
+		}
+	}
 
 	return
 }
