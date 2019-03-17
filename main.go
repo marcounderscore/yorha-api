@@ -16,7 +16,7 @@ func main() {
 	app.Logger().SetLevel("debug")
 
 	// Repository is created with the data from data source
-	repo := repositories.NewAutomataRepository(datasource.Automatas)
+	repo := repositories.NewAutomataRepository(datasource.Database)
 	// Automata service will bind it to the app's dependencies.
 	automataService := services.NewAutomataService(repo)
 	hero.Register(automataService)
