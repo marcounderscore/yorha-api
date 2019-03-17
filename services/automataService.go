@@ -9,6 +9,7 @@ import (
 type AutomataService interface {
 	GetAll() []datamodels.Automata
 	GetByID(id uint) (datamodels.Automata, bool)
+	Create(name string, occupation string, race string, photo string) (datamodels.Automata, error)
 }
 
 // NewAutomataService returns the default service
@@ -22,12 +23,20 @@ type automataService struct {
 	repo repositories.AutomataRepository
 }
 
-// GetAll returns all
 func (s *automataService) GetAll() []datamodels.Automata {
 	return s.repo.SelectMany()
 }
 
-// GetByID returns one based on its id
 func (s *automataService) GetByID(id uint) (datamodels.Automata, bool) {
 	return s.repo.Select(id)
+}
+
+func (s *automataService) Create(name string, occupation string, race string, photo string) (datamodels.Automata, error) {
+	// update the movie and return it.
+	return s.repo.Insert(datamodels.Automata{
+		Name:       name,
+		Occupation: occupation,
+		Race:       race,
+		Photo:      photo,
+	})
 }
