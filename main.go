@@ -26,6 +26,7 @@ func main() {
 		r.Get("/", hero.Handler(routes.Automatas))
 		r.Get("/{id: uint}", hero.Handler(routes.AutomataByID))
 		r.Post("/", hero.Handler(routes.InsertAutomata))
+		r.Put("/{id: uint}", hero.Handler(routes.UpdateAutomata))
 	})
 
 	app.Run(
