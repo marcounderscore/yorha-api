@@ -8,4 +8,5 @@ type Automata struct {
 	Name       string `gorm:"size:100"`
 	Occupation string `gorm:"size:100"`
 	Race       string `gorm:"size:100"`
+	Photo      string `gorm:"size:500"`
 }
