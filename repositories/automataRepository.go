@@ -13,6 +13,7 @@ type AutomataRepository interface {
 	Select(id uint) (automata datamodels.Automata, found bool)
 	Insert(automata datamodels.Automata) (insertedRecord datamodels.Automata, err error)
 	Update(id uint, automata datamodels.Automata) (updatedRecord datamodels.Automata, found bool, err error)
+	Delete(id uint) (automata datamodels.Automata, found bool)
 }
 
 // NewAutomataRepository returns a new memory-based repository,
@@ -73,4 +74,18 @@ func (r *automataMemoryRepository) Update(id uint, automata datamodels.Automata)
 	}
 
 	return datamodels.Automata{}, false, errors.New("Not found record")
+}
+
+func (r *automataMemoryRepository) Delete(id uint) (automata datamodels.Automata, found bool) {
+	var automatas []datamodels.Automata
+	r.source.Find(&automatas)
+	for _, item := range automatas {
+		if item.ID == id {
+			automata = item
+			r.source.Delete(&item)
+			return automata, true
+		}
+	}
+
+	return
 }
