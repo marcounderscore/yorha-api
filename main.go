@@ -15,11 +15,13 @@ func main() {
 	app := iris.New()
 	app.Logger().SetLevel("debug")
 
-	// Repository is created with the data from data source
-	repo := repositories.NewAutomataRepository(datasource.Database)
-	// Automata service will bind it to the app's dependencies.
-	automataService := services.NewAutomataService(repo)
-	hero.Register(automataService)
+	hero.Register(
+		services.NewAutomataService(
+			repositories.NewAutomataRepository(
+				datasource.Database,
+			),
+		),
+	)
 
 	app.PartyFunc("/automatas", func(r iris.Party) {
 		r.Use(middleware.BasicAuth)
@@ -27,6 +29,7 @@ func main() {
 		r.Get("/{id: uint}", hero.Handler(routes.AutomataByID))
 		r.Post("/", hero.Handler(routes.InsertAutomata))
 		r.Put("/{id: uint}", hero.Handler(routes.UpdateAutomata))
+		r.Delete("/{id: uint}", hero.Handler(routes.DeleteAutomata))
 	})
 
 	app.Run(
