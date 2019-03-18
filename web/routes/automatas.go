@@ -52,3 +52,8 @@ func UpdateAutomata(ctx iris.Context, service services.AutomataService, id uint)
 
 	return service.Update(id, name, occupation, race, photo)
 }
+
+// DeleteAutomata deletes the current automata. http://localhost:8080/automatas/1
+func DeleteAutomata(service services.AutomataService, id uint) (automata datamodels.Automata, found bool) {
+	return service.DeleteByID(id)
+}
