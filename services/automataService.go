@@ -11,6 +11,7 @@ type AutomataService interface {
 	GetByID(id uint) (datamodels.Automata, bool)
 	Create(name string, occupation string, race string, photo string) (datamodels.Automata, error)
 	Update(id uint, name string, occupation string, race string, photo string) (datamodels.Automata, bool, error)
+	DeleteByID(id uint) (datamodels.Automata, bool)
 }
 
 // NewAutomataService returns the default service
@@ -48,4 +49,8 @@ func (s *automataService) Update(id uint, name string, occupation string, race s
 		Race:       race,
 		Photo:      photo,
 	})
+}
+
+func (s *automataService) DeleteByID(id uint) (datamodels.Automata, bool) {
+	return s.repo.Delete(id)
 }
