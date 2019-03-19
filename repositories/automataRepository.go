@@ -28,28 +28,41 @@ type automataMemoryRepository struct {
 func (r *automataMemoryRepository) SelectMany() (results []datamodels.Automata) {
 	r.source.Find(&results)
 
-	return
+	var response []datamodels.Automata
+	for _, item := range results {
+		var race datamodels.Race
+		r.source.First(&race)
+		r.source.Model(&item).Association("Race").Append(race)
+		response = append(response, item)
+	}
+
+	return response
 }
 
 func (r *automataMemoryRepository) Select(id uint) (automata datamodels.Automata, found bool) {
-	var automatas []datamodels.Automata
-	r.source.Find(&automatas)
-	for _, item := range automatas {
-		if item.ID == id {
-			automata = item
-			return automata, true
-		}
+	r.source.First(&automata, id)
+	if automata.ID != 0 {
+		var race datamodels.Race
+		r.source.First(&race)
+		r.source.Model(&automata).Association("Race").Append(race)
+		return automata, true
 	}
 
 	return
 }
 
 func (r *automataMemoryRepository) Insert(automata datamodels.Automata) (datamodels.Automata, error) {
+	var race datamodels.Race
+	r.source.First(&race, automata.RaceID)
+	if race.ID == 0 {
+		return datamodels.Automata{}, errors.New("Foreign key constraint fail for Race id")
+	}
+
 	r.source.Create(&datamodels.Automata{
 		Name:       automata.Name,
 		Occupation: automata.Occupation,
-		Race:       automata.Race,
 		Photo:      automata.Photo,
+		RaceID:     automata.RaceID,
 	})
 	r.source.Last(&automata)
 
@@ -57,20 +70,22 @@ func (r *automataMemoryRepository) Insert(automata datamodels.Automata) (datamod
 }
 
 func (r *automataMemoryRepository) Update(id uint, automata datamodels.Automata) (datamodels.Automata, bool, error) {
-	var automatas []datamodels.Automata
+	var race datamodels.Race
+	r.source.First(&race, automata.RaceID)
+	if race.ID == 0 {
+		return datamodels.Automata{}, true, errors.New("Foreign key constraint fail for Race id")
+	}
+
 	var current datamodels.Automata
-	r.source.Find(&automatas)
-	for _, item := range automatas {
-		if item.ID == id {
-			current = item
-			r.source.Model(&current).Updates(datamodels.Automata{
-				Name:       automata.Name,
-				Occupation: automata.Occupation,
-				Race:       automata.Race,
-				Photo:      automata.Photo,
-			})
-			return current, true, nil
-		}
+	r.source.First(&current, id)
+	if current.ID != 0 {
+		r.source.Model(&current).Updates(datamodels.Automata{
+			Name:       automata.Name,
+			Occupation: automata.Occupation,
+			RaceID:     automata.RaceID,
+			Photo:      automata.Photo,
+		})
+		return current, true, nil
 	}
 
 	return datamodels.Automata{}, false, errors.New("Not found record")
