@@ -23,6 +23,14 @@ func main() {
 		),
 	)
 
+	hero.Register(
+		services.NewWeaponService(
+			repositories.NewWeaponRepository(
+				datasource.Database,
+			),
+		),
+	)
+
 	app.PartyFunc("/automatas", func(r iris.Party) {
 		r.Use(middleware.BasicAuth)
 		r.Get("/", hero.Handler(routes.Automatas))
@@ -30,6 +38,15 @@ func main() {
 		r.Post("/", hero.Handler(routes.InsertAutomata))
 		r.Put("/{id: uint}", hero.Handler(routes.UpdateAutomata))
 		r.Delete("/{id: uint}", hero.Handler(routes.DeleteAutomata))
+	})
+
+	app.PartyFunc("/weapons", func(r iris.Party) {
+		r.Use(middleware.BasicAuth)
+		r.Get("/", hero.Handler(routes.Weapons))
+		r.Get("/{id: uint}", hero.Handler(routes.WeaponByID))
+		r.Post("/", hero.Handler(routes.InsertWeapon))
+		r.Put("/{id: uint}", hero.Handler(routes.UpdateWeapon))
+		r.Delete("/{id: uint}", hero.Handler(routes.DeleteWeapon))
 	})
 
 	app.Run(
