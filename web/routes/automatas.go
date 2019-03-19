@@ -23,7 +23,7 @@ func InsertAutomata(ctx iris.Context, service services.AutomataService) (datamod
 
 	if err := ctx.ReadJSON(&automata); err != nil {
 		ctx.StatusCode(iris.StatusBadRequest)
-		return datamodels.Automata{}, errors.New("Json request for post not found")
+		return datamodels.Automata{}, errors.New("Json post request not correct at all")
 	}
 
 	return service.Create(automata.Name, automata.Occupation, automata.Photo, automata.RaceID)
@@ -35,7 +35,7 @@ func UpdateAutomata(ctx iris.Context, service services.AutomataService, id uint)
 
 	if err := ctx.ReadJSON(&automata); err != nil {
 		ctx.StatusCode(iris.StatusBadRequest)
-		return datamodels.Automata{}, true, errors.New("Json request for put not found")
+		return datamodels.Automata{}, true, errors.New("Json put request not correct at all")
 	}
 
 	return service.Update(id, automata.Name, automata.Occupation, automata.Photo, automata.RaceID)
