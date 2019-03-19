@@ -31,7 +31,7 @@ func (r *automataMemoryRepository) SelectMany() (results []datamodels.Automata) 
 	var response []datamodels.Automata
 	for _, item := range results {
 		var race datamodels.Race
-		r.source.First(&race)
+		r.source.First(&race, item.RaceID)
 		r.source.Model(&item).Association("Race").Append(race)
 		response = append(response, item)
 	}
@@ -43,7 +43,7 @@ func (r *automataMemoryRepository) Select(id uint) (automata datamodels.Automata
 	r.source.First(&automata, id)
 	if automata.ID != 0 {
 		var race datamodels.Race
-		r.source.First(&race)
+		r.source.First(&race, automata.RaceID)
 		r.source.Model(&automata).Association("Race").Append(race)
 		return automata, true
 	}
@@ -92,14 +92,10 @@ func (r *automataMemoryRepository) Update(id uint, automata datamodels.Automata)
 }
 
 func (r *automataMemoryRepository) Delete(id uint) (automata datamodels.Automata, found bool) {
-	var automatas []datamodels.Automata
-	r.source.Find(&automatas)
-	for _, item := range automatas {
-		if item.ID == id {
-			automata = item
-			r.source.Delete(&item)
-			return automata, true
-		}
+	r.source.First(&automata, id)
+	if automata.ID != 0 {
+		r.source.Delete(&automata)
+		return automata, true
 	}
 
 	return
