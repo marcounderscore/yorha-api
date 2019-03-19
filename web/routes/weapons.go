@@ -26,7 +26,7 @@ func InsertWeapon(ctx iris.Context, service services.WeaponService) (datamodels.
 		return datamodels.Weapon{}, errors.New("Json request for post not found")
 	}
 
-	return service.Create(weapon.Name, weapon.Class, weapon.Description, weapon.Ability, weapon.Photo)
+	return service.Create(weapon.Name, weapon.Description, weapon.Ability, weapon.Photo, weapon.ClassID)
 }
 
 // UpdateWeapon modify a current record in the database. http://localhost:8080/weapons/1
@@ -38,7 +38,7 @@ func UpdateWeapon(ctx iris.Context, service services.WeaponService, id uint) (da
 		return datamodels.Weapon{}, true, errors.New("Json request for put not found")
 	}
 
-	return service.Update(id, weapon.Name, weapon.Class, weapon.Description, weapon.Ability, weapon.Photo)
+	return service.Update(id, weapon.Name, weapon.Description, weapon.Ability, weapon.Photo, weapon.ClassID)
 }
 
 // DeleteWeapon deletes the current Weapon. http://localhost:8080/weapons/1
