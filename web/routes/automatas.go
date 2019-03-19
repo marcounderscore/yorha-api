@@ -26,7 +26,7 @@ func InsertAutomata(ctx iris.Context, service services.AutomataService) (datamod
 		return datamodels.Automata{}, errors.New("Json request for post not found")
 	}
 
-	return service.Create(automata.Name, automata.Occupation, automata.Race, automata.Photo)
+	return service.Create(automata.Name, automata.Occupation, automata.RaceID, automata.Photo)
 }
 
 // UpdateAutomata modify a current record in the database. http://localhost:8080/automatas/1
@@ -38,7 +38,7 @@ func UpdateAutomata(ctx iris.Context, service services.AutomataService, id uint)
 		return datamodels.Automata{}, true, errors.New("Json request for put not found")
 	}
 
-	return service.Update(id, automata.Name, automata.Occupation, automata.Race, automata.Photo)
+	return service.Update(id, automata.Name, automata.Occupation, automata.RaceID, automata.Photo)
 }
 
 // DeleteAutomata deletes the current automata. http://localhost:8080/automatas/1
