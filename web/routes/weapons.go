@@ -23,7 +23,7 @@ func InsertWeapon(ctx iris.Context, service services.WeaponService) (datamodels.
 
 	if err := ctx.ReadJSON(&weapon); err != nil {
 		ctx.StatusCode(iris.StatusBadRequest)
-		return datamodels.Weapon{}, errors.New("Json request for post not found")
+		return datamodels.Weapon{}, errors.New("Json post request not correct at all")
 	}
 
 	return service.Create(weapon.Name, weapon.Description, weapon.Ability, weapon.Photo, weapon.ClassID)
@@ -35,7 +35,7 @@ func UpdateWeapon(ctx iris.Context, service services.WeaponService, id uint) (da
 
 	if err := ctx.ReadJSON(&weapon); err != nil {
 		ctx.StatusCode(iris.StatusBadRequest)
-		return datamodels.Weapon{}, true, errors.New("Json request for put not found")
+		return datamodels.Weapon{}, true, errors.New("Json put request not correct at all")
 	}
 
 	return service.Update(id, weapon.Name, weapon.Description, weapon.Ability, weapon.Photo, weapon.ClassID)
