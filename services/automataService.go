@@ -9,8 +9,8 @@ import (
 type AutomataService interface {
 	GetAll() []datamodels.Automata
 	GetByID(id uint) (datamodels.Automata, bool)
-	Create(name string, occupation string, raceID uint, photo string) (datamodels.Automata, error)
-	Update(id uint, name string, occupation string, raceID uint, photo string) (datamodels.Automata, bool, error)
+	Create(name string, occupation string, photo string, raceID uint) (datamodels.Automata, error)
+	Update(id uint, name string, occupation string, photo string, raceID uint) (datamodels.Automata, bool, error)
 	DeleteByID(id uint) (datamodels.Automata, bool)
 }
 
@@ -33,21 +33,21 @@ func (s *automataService) GetByID(id uint) (datamodels.Automata, bool) {
 	return s.repo.Select(id)
 }
 
-func (s *automataService) Create(name string, occupation string, raceID uint, photo string) (datamodels.Automata, error) {
+func (s *automataService) Create(name string, occupation string, photo string, raceID uint) (datamodels.Automata, error) {
 	return s.repo.Insert(datamodels.Automata{
 		Name:       name,
 		Occupation: occupation,
-		RaceID:     raceID,
 		Photo:      photo,
+		RaceID:     raceID,
 	})
 }
 
-func (s *automataService) Update(id uint, name string, occupation string, raceID uint, photo string) (datamodels.Automata, bool, error) {
+func (s *automataService) Update(id uint, name string, occupation string, photo string, raceID uint) (datamodels.Automata, bool, error) {
 	return s.repo.Update(id, datamodels.Automata{
 		Name:       name,
 		Occupation: occupation,
-		RaceID:     raceID,
 		Photo:      photo,
+		RaceID:     raceID,
 	})
 }
 
