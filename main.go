@@ -39,6 +39,14 @@ func main() {
 		),
 	)
 
+	hero.Register(
+		services.NewBossService(
+			repositories.NewBossRepository(
+				datasource.Database,
+			),
+		),
+	)
+
 	app.PartyFunc("/automatas", func(r iris.Party) {
 		r.Use(middleware.BasicAuth)
 		r.Get("/", hero.Handler(routes.Automatas))
@@ -64,6 +72,15 @@ func main() {
 		r.Post("/", hero.Handler(routes.InsertPodProgram))
 		r.Put("/{id: uint}", hero.Handler(routes.UpdatePodProgram))
 		r.Delete("/{id: uint}", hero.Handler(routes.DeletePodProgram))
+	})
+
+	app.PartyFunc("/bosses", func(r iris.Party) {
+		r.Use(middleware.BasicAuth)
+		r.Get("/", hero.Handler(routes.Bosses))
+		r.Get("/{id: uint}", hero.Handler(routes.BossByID))
+		r.Post("/", hero.Handler(routes.InsertBoss))
+		r.Put("/{id: uint}", hero.Handler(routes.UpdateBoss))
+		r.Delete("/{id: uint}", hero.Handler(routes.DeleteBoss))
 	})
 
 	app.Run(
