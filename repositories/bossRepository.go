@@ -28,12 +28,35 @@ type bossMemoryRepository struct {
 func (r *bossMemoryRepository) SelectMany() (results []datamodels.Boss) {
 	r.source.Find(&results)
 
-	return
+	var response []datamodels.Boss
+	var zones []datamodels.Zone
+	r.source.Find(&zones)
+	for _, item := range results {
+		for _, innerItem := range zones {
+			if innerItem.BossID == item.ID {
+				var zone datamodels.Zone
+				r.source.First(&zone, innerItem.ID)
+				r.source.Model(&item).Association("Zones").Append([]datamodels.Zone{zone})
+			}
+		}
+		response = append(response, item)
+	}
+
+	return response
 }
 
 func (r *bossMemoryRepository) Select(id uint) (boss datamodels.Boss, found bool) {
 	r.source.First(&boss, id)
 	if boss.ID != 0 {
+		var zones []datamodels.Zone
+		r.source.Find(&zones)
+		for _, item := range zones {
+			if item.BossID == id {
+				var zone datamodels.Zone
+				r.source.First(&zone, item.ID)
+				r.source.Model(&boss).Association("Zones").Append([]datamodels.Zone{zone})
+			}
+		}
 		return boss, true
 	}
 
