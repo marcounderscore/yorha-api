@@ -59,12 +59,13 @@ func (r *weaponMemoryRepository) Insert(weapon datamodels.Weapon) (datamodels.We
 	}
 
 	r.source.Create(&datamodels.Weapon{
-		Name:        weapon.Name,
-		Class:       weapon.Class,
-		Description: weapon.Description,
-		Ability:     weapon.Ability,
-		Photo:       weapon.Photo,
-		ClassID:     weapon.ClassID,
+		Name:      weapon.Name,
+		Class:     weapon.Class,
+		MinAttack: weapon.MinAttack,
+		MaxAttack: weapon.MaxAttack,
+		Ability:   weapon.Ability,
+		Photo:     weapon.Photo,
+		ClassID:   weapon.ClassID,
 	})
 	r.source.Last(&weapon)
 
@@ -82,12 +83,13 @@ func (r *weaponMemoryRepository) Update(id uint, weapon datamodels.Weapon) (data
 	r.source.First(&current, id)
 	if current.ID != 0 {
 		r.source.Model(&current).Updates(datamodels.Weapon{
-			Name:        weapon.Name,
-			Class:       weapon.Class,
-			Description: weapon.Description,
-			Ability:     weapon.Ability,
-			Photo:       weapon.Photo,
-			ClassID:     weapon.ClassID,
+			Name:      weapon.Name,
+			Class:     weapon.Class,
+			MinAttack: weapon.MinAttack,
+			MaxAttack: weapon.MaxAttack,
+			Ability:   weapon.Ability,
+			Photo:     weapon.Photo,
+			ClassID:   weapon.ClassID,
 		})
 		return current, true, nil
 	}
