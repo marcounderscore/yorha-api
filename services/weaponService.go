@@ -9,8 +9,8 @@ import (
 type WeaponService interface {
 	GetAll() []datamodels.Weapon
 	GetByID(id uint) (datamodels.Weapon, bool)
-	Create(name string, description string, ability string, photo string, classID uint) (datamodels.Weapon, error)
-	Update(id uint, name string, description string, ability string, photo string, classID uint) (datamodels.Weapon, bool, error)
+	Create(name string, minAttack int, maxAttack int, ability string, photo string, classID uint) (datamodels.Weapon, error)
+	Update(id uint, name string, minAttack int, maxAttack int, ability string, photo string, classID uint) (datamodels.Weapon, bool, error)
 	DeleteByID(id uint) (datamodels.Weapon, bool)
 }
 
@@ -33,23 +33,25 @@ func (s *weaponService) GetByID(id uint) (datamodels.Weapon, bool) {
 	return s.repo.Select(id)
 }
 
-func (s *weaponService) Create(name string, description string, ability string, photo string, classID uint) (datamodels.Weapon, error) {
+func (s *weaponService) Create(name string, minAttack int, maxAttack int, ability string, photo string, classID uint) (datamodels.Weapon, error) {
 	return s.repo.Insert(datamodels.Weapon{
-		Name:        name,
-		Description: description,
-		Ability:     ability,
-		Photo:       photo,
-		ClassID:     classID,
+		Name:      name,
+		MinAttack: minAttack,
+		MaxAttack: maxAttack,
+		Ability:   ability,
+		Photo:     photo,
+		ClassID:   classID,
 	})
 }
 
-func (s *weaponService) Update(id uint, name string, description string, ability string, photo string, classID uint) (datamodels.Weapon, bool, error) {
+func (s *weaponService) Update(id uint, name string, minAttack int, maxAttack int, ability string, photo string, classID uint) (datamodels.Weapon, bool, error) {
 	return s.repo.Update(id, datamodels.Weapon{
-		Name:        name,
-		Description: description,
-		Ability:     ability,
-		Photo:       photo,
-		ClassID:     classID,
+		Name:      name,
+		MinAttack: minAttack,
+		MaxAttack: maxAttack,
+		Ability:   ability,
+		Photo:     photo,
+		ClassID:   classID,
 	})
 }
 
