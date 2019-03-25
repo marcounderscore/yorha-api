@@ -17,33 +17,16 @@ func main() {
 
 	hero.Register(
 		services.NewAutomataService(
-			repositories.NewAutomataRepository(
-				datasource.Database,
-			),
+			repositories.NewAutomataRepository(datasource.Database),
 		),
-	)
-
-	hero.Register(
 		services.NewWeaponService(
-			repositories.NewWeaponRepository(
-				datasource.Database,
-			),
+			repositories.NewWeaponRepository(datasource.Database),
 		),
-	)
-
-	hero.Register(
 		services.NewPodProgramService(
-			repositories.NewPodProgramRepository(
-				datasource.Database,
-			),
+			repositories.NewPodProgramRepository(datasource.Database),
 		),
-	)
-
-	hero.Register(
 		services.NewBossService(
-			repositories.NewBossRepository(
-				datasource.Database,
-			),
+			repositories.NewBossRepository(datasource.Database),
 		),
 	)
 
