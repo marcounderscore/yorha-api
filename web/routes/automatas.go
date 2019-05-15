@@ -2,9 +2,10 @@ package routes
 
 import (
 	"errors"
-	"iris"
 	"yorha-api/datamodels"
 	"yorha-api/services"
+
+	"github.com/kataras/iris"
 )
 
 // Automatas returns list of the automatas. http://localhost:8080/automatas

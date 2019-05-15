@@ -2,9 +2,10 @@ package routes
 
 import (
 	"errors"
-	"iris"
 	"yorha-api/datamodels"
 	"yorha-api/services"
+
+	"github.com/kataras/iris"
 )
 
 // PodPrograms returns list of the podPrograms. http://localhost:8080/podprograms

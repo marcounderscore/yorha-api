@@ -2,9 +2,10 @@ package routes
 
 import (
 	"errors"
-	"iris"
 	"yorha-api/datamodels"
 	"yorha-api/services"
+
+	"github.com/kataras/iris"
 )
 
 // Bosses returns list of the Bosses. http://localhost:8080/Bosses

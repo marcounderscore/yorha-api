@@ -2,9 +2,10 @@ package routes
 
 import (
 	"errors"
-	"iris"
 	"yorha-api/datamodels"
 	"yorha-api/services"
+
+	"github.com/kataras/iris"
 )
 
 // Weapons returns list of the Weapons. http://localhost:8080/weapons
