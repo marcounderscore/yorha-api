@@ -14,4 +14,4 @@ Grant all privileges to the user
 `go run yorha-migration.go`
 #### Run the project
 `go run main.go`
-#### Make petitions by yourself, check <a href="https://github.com/DarkoVR/yorha-api/wiki">wiki</a> for further references
+#### Make petitions by yourself, check <a href="https://github.com/marcounbeknownst/yorha-api/wiki">wiki</a> for further references
