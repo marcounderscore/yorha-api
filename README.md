@@ -10,8 +10,8 @@ Simple api handled with dependency injection with a Nier:Automata tematic.
 ### Usage:
 Create a mysql database called <b>yorha_db</b> with user <b>yorha_user</b> and pass <b>yorha_pass</b><br />
 Grant all privileges to the user
-#### In order to populate the database run <a href="https://gist.github.com/marcounbeknownst/cfec38abbada16e0cffa514a86a9228f">yorha-migration.go</a> that will create everything in the database
+#### In order to populate the database run <a href="https://gist.github.com/marcounderscore/cfec38abbada16e0cffa514a86a9228f">yorha-migration.go</a> that will create everything in the database
 `go run yorha-migration.go`
 #### Run the project
 `go run main.go`
-#### Make petitions by yourself, check <a href="https://github.com/marcounbeknownst/yorha-api/wiki">wiki</a> for further references
+#### Make petitions by yourself, check <a href="https://github.com/marcounderscore/yorha-api/wiki">wiki</a> for further references
